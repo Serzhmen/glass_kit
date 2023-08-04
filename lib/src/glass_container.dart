@@ -399,10 +399,10 @@ class GlassContainer extends StatelessWidget {
 
     // Clip the current container depending on the shape
     if (_isCircle) {
-      assert(borderRadius == null);
+      assert(borderRadius == BorderRadius.circular(0));
       current = ClipOval(child: current);
     } else {
-      assert(borderRadius != null);
+      assert(borderRadius != BorderRadius.circular(0));
       current = ClipRRect(borderRadius: borderRadius, child: current);
     }
 
