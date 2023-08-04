@@ -43,7 +43,7 @@ class GlassContainer extends StatelessWidget {
     this.margin,
     this.color,
     this.gradient,
-    BorderRadius borderRadius,
+    required BorderRadius borderRadius,
     double? borderWidth,
     this.borderColor,
     this.borderGradient,
@@ -63,12 +63,14 @@ class GlassContainer extends StatelessWidget {
         shape = shape,
         borderRadius = shape == BoxShape.rectangle
             ? (borderRadius ?? kBorderRadius)
-            : null,
+            : BorderRadius.circular(0),
         assert(color != null || gradient != null,
             'Both color and gradient cannot be null\n'),
         assert(borderColor != null || borderGradient != null,
             'Both borderColor and borderGradient cannot be null\n'),
-        assert(shape != BoxShape.circle || borderRadius == BorderRadius.circular(0),
+        assert(
+            shape != BoxShape.circle ||
+                borderRadius == BorderRadius.circular(0),
             'The [borderRadius] needs to be null if the shape is [BoxShape.circle]\n'),
         assert(kIsWeb != true || borderColor != null,
             'borderColor cannot be null when runing on the Web\n'),
@@ -96,7 +98,7 @@ class GlassContainer extends StatelessWidget {
     EdgeInsetsGeometry? margin,
     Gradient? gradient,
     Color? color,
-    BorderRadius? borderRadius,
+    required BorderRadius borderRadius,
     double? borderWidth,
     Gradient? borderGradient,
     Color? borderColor,
@@ -117,7 +119,7 @@ class GlassContainer extends StatelessWidget {
         borderColor = borderColor,
         borderRadius = shape == BoxShape.rectangle
             ? (borderRadius ?? kBorderRadius)
-            : null,
+            : BorderRadius.circular(0),
         borderWidth = borderWidth ?? kBorderWidth,
         elevation = elevation ?? kElevation,
         margin = margin,
@@ -128,7 +130,9 @@ class GlassContainer extends StatelessWidget {
         transformAlignment = transformAlignment,
         alignment = alignment,
         child = child,
-        assert(shape != BoxShape.circle || borderRadius == BorderRadius.circular(0),
+        assert(
+            shape != BoxShape.circle ||
+                borderRadius == BorderRadius.circular(0),
             'The [borderRadius] needs to be null if the shape is [BoxShape.circle]\n'),
         assert(kIsWeb != true || borderColor != null,
             'borderColor cannot be null when runing on the Web\n'),
@@ -156,7 +160,7 @@ class GlassContainer extends StatelessWidget {
     EdgeInsetsGeometry? margin,
     Gradient? gradient,
     Color? color,
-    BorderRadius? borderRadius,
+    required BorderRadius borderRadius,
     double? borderWidth,
     Gradient? borderGradient,
     Color? borderColor,
@@ -178,7 +182,7 @@ class GlassContainer extends StatelessWidget {
         borderColor = borderColor,
         borderRadius = shape == BoxShape.rectangle
             ? (borderRadius ?? kBorderRadius)
-            : null,
+            : BorderRadius.circular(0),
         borderWidth = borderWidth ?? kBorderWidth,
         elevation = elevation ?? kElevation,
         margin = margin,
@@ -189,7 +193,9 @@ class GlassContainer extends StatelessWidget {
         transformAlignment = transformAlignment,
         alignment = alignment,
         child = child,
-        assert(shape != BoxShape.circle || borderRadius == BorderRadius.circular(0),
+        assert(
+            shape != BoxShape.circle ||
+                borderRadius == BorderRadius.circular(0),
             'The [borderRadius] needs to be null if the shape is [BoxShape.circle]\n'),
         assert(kIsWeb != true || borderColor != null,
             'borderColor cannot be null when runing on the Web\n'),
@@ -221,7 +227,7 @@ class GlassContainer extends StatelessWidget {
   ///
   /// Applies only to boxes with rectangular shapes; Must be null if [shape] is
   /// [BoxShape.circle].
-  final BorderRadius? borderRadius;
+  final BorderRadius borderRadius;
 
   /// The strokeWidth of the border
   ///
@@ -369,7 +375,7 @@ class GlassContainer extends StatelessWidget {
     if (!_colorOnlyBorder && !kIsWeb) {
       assert(borderGradient != null);
       if (_isCircle) {
-        assert(borderRadius == BorderRadius.circular(0));
+        assert(borderRadius == null);
         current = CustomPaint(
           painter: CircleBorderPainter(
             radius: height / 2,
@@ -379,7 +385,7 @@ class GlassContainer extends StatelessWidget {
           child: current,
         );
       } else {
-        assert(borderRadius != BorderRadius.circular(0));
+        assert(borderRadius != null);
         current = CustomPaint(
           painter: RectBorderPainter(
             radius: borderRadius!.topLeft,
@@ -399,10 +405,10 @@ class GlassContainer extends StatelessWidget {
 
     // Clip the current container depending on the shape
     if (_isCircle) {
-      assert(borderRadius == BorderRadius.circular(0));
+      assert(borderRadius == null);
       current = ClipOval(child: current);
     } else {
-      assert(borderRadius != BorderRadius.circular(0));
+      assert(borderRadius != null);
       current = ClipRRect(borderRadius: borderRadius, child: current);
     }
 
@@ -505,3 +511,4 @@ class _FrostedWidget extends StatelessWidget {
     );
   }
 }
+
