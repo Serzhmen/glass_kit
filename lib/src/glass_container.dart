@@ -43,7 +43,7 @@ class GlassContainer extends StatelessWidget {
     this.margin,
     this.color,
     this.gradient,
-    BorderRadius? borderRadius,
+    BorderRadius borderRadius,
     double? borderWidth,
     this.borderColor,
     this.borderGradient,
