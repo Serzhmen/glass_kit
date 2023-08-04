@@ -189,7 +189,7 @@ class GlassContainer extends StatelessWidget {
         transformAlignment = transformAlignment,
         alignment = alignment,
         child = child,
-        assert(shape != BoxShape.circle || borderRadius == null,
+        assert(shape != BoxShape.circle || borderRadius == BorderRadius.circular(0),
             'The [borderRadius] needs to be null if the shape is [BoxShape.circle]\n'),
         assert(kIsWeb != true || borderColor != null,
             'borderColor cannot be null when runing on the Web\n'),
@@ -369,7 +369,7 @@ class GlassContainer extends StatelessWidget {
     if (!_colorOnlyBorder && !kIsWeb) {
       assert(borderGradient != null);
       if (_isCircle) {
-        assert(borderRadius == null);
+        assert(borderRadius == BorderRadius.circular(0));
         current = CustomPaint(
           painter: CircleBorderPainter(
             radius: height / 2,
@@ -379,7 +379,7 @@ class GlassContainer extends StatelessWidget {
           child: current,
         );
       } else {
-        assert(borderRadius != null);
+        assert(borderRadius != BorderRadius.circular(0));
         current = CustomPaint(
           painter: RectBorderPainter(
             radius: borderRadius!.topLeft,
